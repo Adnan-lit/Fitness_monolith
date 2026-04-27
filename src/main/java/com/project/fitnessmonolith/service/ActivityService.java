@@ -9,6 +9,8 @@ import com.project.fitnessmonolith.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
@@ -43,5 +45,10 @@ public class ActivityService {
         response.setCreatedAt(savedActivity.getCreatedAt());
         response.setUpdatedAt(savedActivity.getUpdatedAt());
         return response;
+    }
+
+    public List<ActivityResponse> getActivityForUser(String userId) {
+        List<Activity> activities = activityRepository.findByUserId(userId);
+        return activities.stream().map(this::mapToResponse).toList();
     }
 }
